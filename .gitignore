@@ -1,0 +1,14 @@
+# Dependencias
+node_modules/
+database/
+
+# Entornos virtuales / variables de entorno
+.env
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpetas de compilación
+dist/
+build/
