@@ -10,6 +10,8 @@ require('dotenv').config();
 // 1. Importación de enrutadores de los módulos principales
 const authRoutes = require('./auth/auth.routes');                           // Autenticación y JWT
 const providerRoutes = require('./providers/providers.routes');             // Módulo de Gestión de Prestadores
+const adminRoutes = require('./admin/admin.routes');                        // <-- Importamos las rutas del admin
+
 const accessPassRoutes = require('./access-passes/access-passes.routes');   // Módulo de Pases y Códigos QR
 const visitorLogRoutes = require('./visitor-logs/visitor-logs.routes');     // Módulo de Control de Garita y Check-in/Check-out
 
@@ -35,7 +37,9 @@ app.use(express.json());
 // 3. Montaje de rutas modularizadas bajo el prefijo /api
 app.use('/api/auth', authRoutes);
 app.use('/api/providers', providerRoutes);
-app.use('/api/passes', accessPassRoutes); // Corregido: Referencia directa a la variable importada
+app.use('/api/admin', adminRoutes);          // Montamos el módulo admin bajo el prefijo /api/admin
+
+app.use('/api/passes', accessPassRoutes);    // Corregido: Referencia directa a la variable importada
 app.use('/api/visitor-logs', visitorLogRoutes);
 
 app.use('/api/expenses', expenseRoutes);
@@ -56,6 +60,35 @@ app.get('/', (req, res) => {
     status: 'success',
     message: '🚀 API global de Nexrust operando con todos los módulos principales',
   });
+});
+
+// RUTA: Obtener estadísticas para el Dashboard Admin
+app.get('/api/admin/stats', async (req, res) => {
+  try {
+    // 1. Contar vehículos ingresados hoy en la garita (tabla visitor_logs)
+    const visitorsResult = await pool.query(
+      "SELECT COUNT(*) FROM visitor_logs WHERE entry_time >= CURRENT_DATE"
+    );
+
+    // 2. Contar prestadores verificados (tabla providers)
+    const providersResult = await pool.query(
+      "SELECT COUNT(*) FROM providers WHERE verification_status = 'verified'"
+    );
+
+    // Devolvemos los datos en formato JSON que el frontend de React está esperando
+    res.json({
+      success: true,
+      stats: {
+        visitorsToday: parseInt(visitorsResult.rows[0].count),
+        activeProviders: parseInt(providersResult.rows[0].count),
+        expensesSynced: "94%", // O puedes calcularlo desde tu tabla expenses
+        activeAlerts: 0
+      }
+    });
+  } catch (err) {
+    console.error("Error al obtener estadísticas:", err);
+    res.status(500).json({ success: false, error: "Error al obtener estadísticas operativas" });
+  }
 });
 
 // 5. Inicialización del servidor HTTP
