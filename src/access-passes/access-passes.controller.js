@@ -69,7 +69,7 @@ const updatePassStatus = async (req, res) => {
   }
 };
 
-// Exportación completa y correcta de todas las funciones
+// Exportación completa y correcta de todas las funciones esperadas por access-passes.routes.js
 module.exports = {
   getPasses,
   createPass,

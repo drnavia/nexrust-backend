@@ -42,6 +42,7 @@ const updateCountryConfig = async (req, res) => {
       WHERE id = $2 
       RETURNING id, name, zone, theme_config;
     `;
+    // Aseguramos que theme_config se guarde correctamente como JSON string o JSONB nativo
     const values = [JSON.stringify(theme_config), id];
     const result = await pool.query(query, values);
 
@@ -50,12 +51,12 @@ const updateCountryConfig = async (req, res) => {
     }
 
     res.json({
-      message: 'Configuración visual actualizada con éxito',
+      message: 'Configuración actualizada con éxito',
       country: result.rows[0]
     });
   } catch (err) {
     console.error('Error al actualizar theme_config:', err);
-    res.status(500).json({ message: 'Error al actualizar la configuración visual en la base de datos' });
+    res.status(500).json({ message: 'Error al actualizar la configuración visual' });
   }
 };
 
