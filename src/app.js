@@ -20,7 +20,7 @@ const ticketRoutes = require('./tickets/tickets.routes');                    // 
 const reservationRoutes = require('./reservations/reservations.routes');     // Módulo de Amenities / Reservas
 const securityAlertRoutes = require('./security-alerts/security-alerts.routes'); // Módulo de Alertas de Seguridad
 
-const recurringAuthRoutes = require('./recurring-authorizations/recurring-authorizations.routes'); // Módulo de Autorizaciones Recurrentes
+const recurringAuthRoutes = require('./recurring-passes/recurring-passes.routes'); // Módulo de Autorizaciones Recurrentes
 const eventRoutes = require('./events/events.routes');                       // Módulo de Eventos Masivos
 const infractionRoutes = require('./infractions/infractions.routes');        // Módulo de Infracciones y Multas
 

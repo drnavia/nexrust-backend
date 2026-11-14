@@ -9,7 +9,7 @@ const {
   createRecurringAuthorization, 
   getRecurringAuthorizations, 
   revokeRecurringAuthorization 
-} = require('./recurring-authorizations.controller');
+} = require('./recurring-passes.controller');
 const { verifyToken } = require('../auth/auth.middleware');
 
 // Todas las rutas requieren token JWT
