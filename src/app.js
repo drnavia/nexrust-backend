@@ -91,6 +91,17 @@ app.get('/api/admin/stats', async (req, res) => {
   }
 });
 
+/**
+ * Ruta de verificación de estado (Health Check)
+ * @location /nexrust-backend/src/app.js (o archivo principal)
+ */
+app.get('/api', (req, res) => {
+  res.status(200).json({ message: '¡Conexión exitosa con Nexrust Backend!' });
+});
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ message: '¡Servidor en línea y operativo!' });
+});
+
 // 5. Inicialización del servidor HTTP
 app.listen(PORT, () => {
   console.log(`🔥 Servidor backend corriendo en el puerto ${PORT}`);
