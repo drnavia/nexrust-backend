@@ -1,21 +1,24 @@
-// ==========================================
-// UBICACIÓN: src/visitor-logs/visitor-logs.routes.js
-// DESCRIPCIÓN: Enrutador para el Control de Accesos y Bitácora en Garita (Check-in / Check-out)
-// ==========================================
+/**
+ * @file visitor-logs.routes.js
+ * @description Enrutador para el Control de Accesos y Bitácora en Garita (Check-in / Check-out).
+ * @location /nexrust-backend/src/visitor-logs/visitor-logs.routes.js
+ */
 
 const express = require('express');
 const router = express.Router();
 
-// 1. Importar exactamente la función definida en el controlador
+// 1. Importar exactamente las funciones definidas en el controlador
 const { 
   registerEntry, 
   scanQrEntry, 
   registerExit, 
   getVisitorLogs 
 } = require('./visitor-logs.controller');
+
+// 2. Importar el middleware verifyToken existente
 const { verifyToken } = require('../auth/auth.middleware');
 
-// Requerir autenticación para gestionar pases
+// Requerir autenticación para gestionar los registros de garita
 router.use(verifyToken);
 
 // Registrar ingreso manual de un visitante o prestador
