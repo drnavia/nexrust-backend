@@ -1,24 +1,16 @@
 /**
  * @file admin.routes.js
- * @description Enrutador para el módulo administrativo y de configuración de countries.
+ * @description Enrutador para la gestión de configuración de countries.
  * @location /nexrust-backend/src/admin/admin.routes.js
  */
 
 const express = require('express');
 const router = express.Router();
-const { getCountriesList, getCountryConfig, updateCountryConfig } = require('./admin.controller');
-const { verifyToken } = require('../auth/auth.middleware');
+const { getCountryConfig, updateCountryConfig } = require('./admin.controller');
 
-// Todas las rutas administrativas exigen autenticación por token
-router.use(verifyToken);
-
-// Endpoint para listar todos los countries (para selector de superadmin)
-router.get('/countries', getCountriesList);
-
-// Endpoint para obtener la configuración de un country
+// Nota: Si en tu app.js montas este router con app.icon('/api', adminRoutes), 
+// la URL final será /api/countries/:id/config
 router.get('/countries/:id/config', getCountryConfig);
-
-// Endpoint para actualizar la configuración de marca blanca (JSONB)
 router.put('/countries/:id/config', updateCountryConfig);
 
 module.exports = router;

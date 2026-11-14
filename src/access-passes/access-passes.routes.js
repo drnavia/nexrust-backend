@@ -7,7 +7,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Importamos las funciones asegurando que coincidan con las exportadas en el controlador
+// Importamos de manera segura las funciones exportadas del controlador
 const { 
   getPasses, 
   createPass, 
@@ -20,7 +20,7 @@ const { verifyToken } = require('../auth/auth.middleware');
 // Protegemos todas las rutas exigiendo token JWT válido
 router.use(verifyToken);
 
-// Endpoint para listar los pases de acceso (Línea 20 aproximada)
+// Endpoint para listar los pases de acceso
 router.get('/', getPasses);
 
 // Endpoint para crear un nuevo pase con QR

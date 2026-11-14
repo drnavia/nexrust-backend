@@ -8,8 +8,8 @@ const pool = require('../config/db');
 
 /**
  * Obtiene la lista completa de pases de acceso registrados.
- * @param {Object} req - Petición HTTP (Express)
- * @param {Object} res - Respuesta HTTP (Express)
+ * @param {Object} req - Petición HTTP Express
+ * @param {Object} res - Respuesta HTTP Express
  */
 const getPasses = async (req, res) => {
   try {
@@ -23,8 +23,8 @@ const getPasses = async (req, res) => {
 
 /**
  * Crea un nuevo pase de acceso o código QR temporal.
- * @param {Object} req - Petición HTTP (Express)
- * @param {Object} res - Respuesta HTTP (Express)
+ * @param {Object} req - Petición HTTP Express
+ * @param {Object} res - Respuesta HTTP Express
  */
 const createPass = async (req, res) => {
   const { user_id, provider_id, country_id, destination_lot, destination_fraction, start_date, end_date, qr_token } = req.body;
@@ -54,8 +54,8 @@ const createPass = async (req, res) => {
 
 /**
  * Actualiza el estado de un pase de acceso (ej. active, completed, cancelled).
- * @param {Object} req - Petición HTTP (Express)
- * @param {Object} res - Respuesta HTTP (Express)
+ * @param {Object} req - Petición HTTP Express
+ * @param {Object} res - Respuesta HTTP Express
  */
 const updatePassStatus = async (req, res) => {
   const { id } = req.params;
@@ -75,7 +75,6 @@ const updatePassStatus = async (req, res) => {
   }
 };
 
-// Exportamos las funciones garantizando compatibilidad con las rutas originales
 module.exports = {
   getPasses,
   createPass,
