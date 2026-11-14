@@ -8,6 +8,8 @@ const pool = require('../config/db');
 
 /**
  * Obtiene la configuración de marca blanca de un Country específico.
+ * @param {Object} req - Objeto de petición HTTP (Express)
+ * @param {Object} res - Objeto de respuesta HTTP (Express)
  */
 const getCountryConfig = async (req, res) => {
   const { id } = req.params;
@@ -30,6 +32,8 @@ const getCountryConfig = async (req, res) => {
 
 /**
  * Actualiza la configuración de marca blanca (theme_config JSONB) de un Country.
+ * @param {Object} req - Objeto de petición HTTP (Express)
+ * @param {Object} res - Objeto de respuesta HTTP (Express)
  */
 const updateCountryConfig = async (req, res) => {
   const { id } = req.params;
