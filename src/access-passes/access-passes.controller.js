@@ -7,20 +7,24 @@
 const pool = require('../config/db');
 
 /**
- * Obtiene la lista de pases de acceso registrados.
+ * Obtiene la lista completa de pases de acceso registrados.
+ * @param {Object} req - Petición HTTP (Express)
+ * @param {Object} res - Respuesta HTTP (Express)
  */
 const getPasses = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM access_passes ORDER BY created_at DESC LIMIT 50');
-    res.json(result.rows);
+    return res.json(result.rows);
   } catch (err) {
     console.error('Error al obtener pases de acceso:', err);
-    res.status(500).json({ message: 'Error interno del servidor' });
+    return res.status(500).json({ message: 'Error interno del servidor al obtener pases' });
   }
 };
 
 /**
- * Crea un nuevo pase de acceso o QR temporal.
+ * Crea un nuevo pase de acceso o código QR temporal.
+ * @param {Object} req - Petición HTTP (Express)
+ * @param {Object} res - Respuesta HTTP (Express)
  */
 const createPass = async (req, res) => {
   const { user_id, provider_id, country_id, destination_lot, destination_fraction, start_date, end_date, qr_token } = req.body;
@@ -41,15 +45,17 @@ const createPass = async (req, res) => {
       qr_token || 'token_qr_generico'
     ];
     const result = await pool.query(query, values);
-    res.status(201).json(result.rows[0]);
+    return res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Error al crear pase de acceso:', err);
-    res.status(500).json({ message: 'Error al registrar el pase de acceso' });
+    return res.status(500).json({ message: 'Error al registrar el pase de acceso' });
   }
 };
 
 /**
  * Actualiza el estado de un pase de acceso (ej. active, completed, cancelled).
+ * @param {Object} req - Petición HTTP (Express)
+ * @param {Object} res - Respuesta HTTP (Express)
  */
 const updatePassStatus = async (req, res) => {
   const { id } = req.params;
@@ -60,16 +66,16 @@ const updatePassStatus = async (req, res) => {
       [status, id]
     );
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Pase no encontrado' });
+      return res.status(404).json({ message: 'Pase de acceso no encontrado' });
     }
-    res.json(result.rows[0]);
+    return res.json(result.rows[0]);
   } catch (err) {
     console.error('Error al actualizar estado del pase:', err);
-    res.status(500).json({ message: 'Error al actualizar el estado' });
+    return res.status(500).json({ message: 'Error al actualizar el estado del pase' });
   }
 };
 
-// Exportación completa y correcta de todas las funciones esperadas por access-passes.routes.js
+// Exportamos las funciones garantizando compatibilidad con las rutas originales
 module.exports = {
   getPasses,
   createPass,
